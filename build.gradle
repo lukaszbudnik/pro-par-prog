@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'scala'
+    id 'com.github.hierynomus.license' version '0.11.0'
+}
+
+group = 'com.github.lukaszbudnik.pro-par-prog'
+archivesBaseName = 'pro-par-prog'
+version = '0.0.1'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'http://repository.apache.org/content/repositories/snapshots'
+    }
+
+    maven {
+        url 'http://dl.bintray.com/scalaz/releases'
+    }
+
+    maven {
+        url "https://oss.sonatype.org/content/repositories/releases"
+    }
+}
+
+dependencies {
+    testCompile 'org.scala-lang:scala-library:2.11.6'
+    testCompile 'org.scala-lang:scala-compiler:2.11.6'
+    testCompile 'org.specs2:specs2-core_2.11:3.3.1'
+    testCompile 'org.specs2:specs2-junit_2.11:3.3.1'
+
+    testCompile 'com.codahale.metrics:metrics-jvm:3.0.2'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+    testCompile 'com.google.guava:guava:18.0'
+}
+
+license {
+    header project.file('HEADER')
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Łukasz Budnik'
+    ext.email = 'lukasz.budnik@gmail.com'
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events 'failed', 'passed'
+    }
+}

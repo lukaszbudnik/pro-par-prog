@@ -7,7 +7,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.lukaszbudnik.proparprog;
+package com.github.lukaszbudnik.proparprog.simple;
 
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
@@ -36,7 +36,7 @@ public class SaturatingThreadPoolsTest {
     }
 
     private int cpuConsumingOperationSimulation() {
-        for (int i = 0; i < 500000; i++) {
+        for (int i = 0; i < 500_000; i++) {
             UUID.randomUUID().toString();
         }
         return -123;
@@ -223,7 +223,5 @@ public class SaturatingThreadPoolsTest {
 
         executorService.shutdown();
     }
-
-
 
 }

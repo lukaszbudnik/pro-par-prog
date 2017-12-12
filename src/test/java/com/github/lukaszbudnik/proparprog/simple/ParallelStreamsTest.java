@@ -7,7 +7,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.lukaszbudnik.proparprog;
+package com.github.lukaszbudnik.proparprog.simple;
 
 import com.google.common.base.Stopwatch;
 import org.junit.Test;
@@ -35,7 +35,7 @@ public class ParallelStreamsTest {
 
         List<String> strings = Arrays.asList("first", "second", "third");
 
-        List<String> processed = strings.parallelStream().unordered().map((s) -> {
+        List<String> processed = strings.parallelStream().map((s) -> {
             long sleep = 0;
             switch (s) {
                 case "first": sleep = 500; break;

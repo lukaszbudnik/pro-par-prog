@@ -9,9 +9,8 @@
  */
 package com.github.lukaszbudnik.proparprog
 
-import java.util.{UUID, Random}
-import java.util.concurrent.{ForkJoinPool, TimeUnit, Executors, ThreadPoolExecutor}
-import java.util.stream.{Collectors, IntStream}
+import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 import com.google.common.base.Stopwatch
 import com.google.common.util.concurrent.ThreadFactoryBuilder
@@ -20,9 +19,10 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 
 import scala.collection.parallel.ForkJoinTaskSupport
+import scala.concurrent.forkjoin.ForkJoinPool
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.util.Random
 
 @RunWith(classOf[JUnitRunner])
 class ParallelCollectionsSpec extends Specification {
@@ -77,7 +77,8 @@ class ParallelCollectionsSpec extends Specification {
       val stopwatch2 = Stopwatch.createStarted
 
       val par = Stream.range(0, 1000, 1).par
-      par.tasksupport = new ForkJoinTaskSupport(new scala.concurrent.forkjoin.ForkJoinPool(Runtime.getRuntime.availableProcessors * 2))
+      val forkJoinPool = new ForkJoinPool(Runtime.getRuntime.availableProcessors * 2)
+      par.tasksupport = new ForkJoinTaskSupport(forkJoinPool)
 
       val uuids2 = par.map((i) => {
         Thread.sleep(random.nextInt(100))
@@ -85,6 +86,8 @@ class ParallelCollectionsSpec extends Specification {
       }).toList
 
       val duration2: Long = stopwatch2.elapsed(TimeUnit.MILLISECONDS)
+
+      forkJoinPool.shutdown
 
       println("parallel collection 1 ==> " + duration1 / 1000.toFloat)
       println("parallel collection 2 ==> " + duration2 / 1000.toFloat)

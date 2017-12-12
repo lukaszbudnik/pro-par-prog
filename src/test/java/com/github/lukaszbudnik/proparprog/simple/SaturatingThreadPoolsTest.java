@@ -36,7 +36,7 @@ public class SaturatingThreadPoolsTest {
     }
 
     private int cpuConsumingOperationSimulation() {
-        for (int i = 0; i < 500000; i++) {
+        for (int i = 0; i < 500_000; i++) {
             UUID.randomUUID().toString();
         }
         return -123;

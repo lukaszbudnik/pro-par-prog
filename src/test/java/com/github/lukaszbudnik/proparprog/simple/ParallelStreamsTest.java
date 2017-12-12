@@ -35,7 +35,7 @@ public class ParallelStreamsTest {
 
         List<String> strings = Arrays.asList("first", "second", "third");
 
-        List<String> processed = strings.parallelStream().unordered().map((s) -> {
+        List<String> processed = strings.parallelStream().map((s) -> {
             long sleep = 0;
             switch (s) {
                 case "first": sleep = 500; break;
